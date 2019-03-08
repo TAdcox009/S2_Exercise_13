@@ -53,18 +53,58 @@
       multi-dimensional array, puzzle.
 	
 */
-//run the init function when the page loads
+// Runs the init function when the page loads.
 window.onload = init;
 
+var puzzleCells;
+
 function init() {
-      //insert the title for the first puzzle
+      // Insert the title for the first puzzle.
       document.getElementById("puzzleTitle").innerHTML = "Puzzle 1";
 
-      // insert HTML code for the first puzzle table
-      document.getElementById("puzzle").innerHTML = drawPuzzle(puzzleHint, puzzleRating, puzzle1);
+      // Insert HTML code for the first puzzle table.
+      document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle1Hint, puzzle1Rating, puzzle1);
+
+      // Add event handlers for the puzzle buttons.
+      var puzzleButtons = document.getElementsByClassName("puzzles");
+      for (var i = 0; i < puzzleButtons.length; i++) {
+            puzzleButtons[i].onclick = swapPuzzle;
+      }
+      setupPuzzle();
 }
 
+function swapPuzzle(e) {
+      // Retrieves the ID of the clicked button.
+      var puzzleID = e.target.id;
 
+      // Retrieves the value of the clicked button.
+      var puzzleTitle = e.target.value;
+      document.getElementById("puzzleTitle").innerHTML = puzzleTitle;
+
+      // Displays the puzzle based on the value of the puzzleID variable.
+      switch (puzzleID) {
+            case "puzzle1":
+                  document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle1Hint, puzzle1Rating, puzzle1);
+                  break;
+            case "puzzle2":
+                  document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle2Hint, puzzle2Rating, puzzle2);
+                  break;
+            case "puzzle3":
+                  document.getElementById("puzzle").innerHTML = drawPuzzle(puzzle3Hint, puzzle3Rating, puzzle3);
+                  break;
+      }
+      setupPuzzle();
+}
+
+function setupPuzzle() {
+      // Match all of the data cells in the puzzle.
+      puzzleCells = document.querySelectorAll("table#hanjieGrid td");
+
+      // Set the initial color of each cell to gold.
+      for (var i = 0; i < puzzleCells.length; i++) {
+            puzzleCells[i].style.backgroundColor = "rgb(233, 207, 29)";
+      }
+}
 
 
 
